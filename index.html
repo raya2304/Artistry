@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artistry — Digital Art Museum</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f6f3ed;--ink:#26251f;--muted:#77746b;--accent:#a94f37}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+.art-image{transition:transform .6s ease}
+.art-card:hover .art-image{transform:scale(1.045)}
+.art-card{overflow:hidden}
+.filter-btn{border:1px solid #ded9cf;padding:9px 17px;border-radius:999px;font-size:13px;white-space:nowrap;transition:.2s}
+.filter-btn.active,.filter-btn:hover{background:var(--ink);color:white;border-color:var(--ink)}
+.heart-btn{background:#f6f3edee;border-radius:50%;width:39px;height:39px;display:grid;place-items:center;font-size:20px}
+.heart-btn.saved{color:#a94f37}
+.modal-backdrop{background:#171611bb;backdrop-filter:blur(5px)}
+input,button{font:inherit}
+button{cursor:pointer}
+@media(max-width:640px){.hero-title{font-size:3.25rem;line-height:1.06}.hero-grid{grid-template-columns:1fr}.hero-image{height:360px}.section-pad{padding-left:20px;padding-right:20px}}
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-40 border-b border-[#e6e0d5] bg-[#f6f3ed]/95 backdrop-blur">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10">
+    <a href="#home" class="flex items-center gap-3">
+      <span class="grid h-10 w-10 place-items-center bg-[#a94f37] text-xl text-white serif">A.</span>
+      <span>
+        <span class="block text-lg font-semibold tracking-wide">ARTISTRY</span>
+        <span class="block text-[9px] uppercase tracking-[.25em] text-stone-500">Digital Art Museum</span>
+      </span>
+    </a>
+    <div class="hidden items-center gap-8 text-sm md:flex">
+      <a href="#gallery" class="hover:text-[#a94f37]">Collection</a>
+      <a href="#artists" class="hover:text-[#a94f37]">Artists</a>
+      <a href="#about" class="hover:text-[#a94f37]">Our Museum</a>
+    </div>
+    <a href="#gallery" class="hidden border border-stone-400 px-5 py-2.5 text-sm transition hover:bg-[#26251f] hover:text-white sm:inline-block">Explore Art ↗</a>
+    <button id="menuBtn" class="text-2xl md:hidden" aria-label="Open navigation">☰</button>
+  </nav>
+  <div id="mobileMenu" class="hidden border-t border-stone-200 px-5 py-4 md:hidden">
+    <div class="flex flex-col gap-4 text-sm">
+      <a href="#gallery">Collection</a><a href="#artists">Artists</a><a href="#about">Our Museum</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="home" class="mx-auto max-w-7xl px-5 py-12 lg:px-10 lg:py-20">
+  <div class="hero-grid grid items-center gap-12 md:grid-cols-2 md:gap-16">
+    <div>
+      <div class="mb-7 flex items-center gap-3 text-xs uppercase tracking-[.24em] text-[#a94f37]">
+        <span class="h-px w-10 bg-[#a94f37]"></span> Art beyond boundaries
+      </div>
+      <h1 class="hero-title max-w-xl text-6xl leading-[1.08] tracking-tight md:text-7xl lg:text-[84px]">
+        Every artwork<br>tells a <span class="text-[#a94f37] italic">story.</span>
+      </h1>
+      <p class="mt-7 max-w-md text-base leading-8 text-stone-600">
+        Step into a world of imagination, color, and creativity. Discover timeless masterpieces and the artists who changed the way we see the world.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-5">
+        <a href="#gallery" class="bg-[#26251f] px-7 py-4 text-sm text-white transition hover:bg-[#a94f37]">Discover the Collection ↗</a>
+        <span class="text-xs text-stone-500">Curated for the curious.</span>
+      </div>
+      <div class="mt-14 flex gap-10 border-t border-stone-300 pt-7">
+        <div><p class="serif text-3xl">120+</p><p class="mt-1 text-xs text-stone-500">Artworks to discover</p></div>
+        <div><p class="serif text-3xl">35+</p><p class="mt-1 text-xs text-stone-500">Featured artists</p></div>
+        <div><p class="serif text-3xl">8</p><p class="mt-1 text-xs text-stone-500">Art movements</p></div>
+      </div>
+    </div>
+    <div class="hero-image relative h-[510px]">
+      <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=85" alt="Classic framed painting in an art gallery">
+      <div class="absolute -bottom-5 -left-4 max-w-xs bg-white p-5 shadow-lg sm:-left-7">
+        <p class="text-[10px] uppercase tracking-[.2em] text-[#a94f37]">Curator's selection</p>
+        <p class="serif mt-2 text-xl">The beauty of stillness</p>
+        <p class="mt-1 text-xs text-stone-500">A journey through classical art</p>
+      </div>
+      <span class="absolute right-4 top-4 bg-[#f6f3ed] px-4 py-2 text-xs tracking-wider">01 / 08</span>
+    </div>
+  </div>
+</section>
+
+<section class="border-y border-stone-300 bg-[#eee9df]">
+  <div class="mx-auto grid max-w-7xl gap-5 px-5 py-7 text-center sm:grid-cols-3 lg:px-10">
+    <div><p class="serif text-xl">Explore</p><p class="mt-1 text-xs text-stone-500">Art from different eras</p></div>
+    <div class="border-y border-stone-300 py-5 sm:border-x sm:border-y-0 sm:py-0"><p class="serif text-xl">Understand</p><p class="mt-1 text-xs text-stone-500">Stories behind masterpieces</p></div>
+    <div><p class="serif text-xl">Appreciate</p><p class="mt-1 text-xs text-stone-500">Creativity in every detail</p></div>
+  </div>
+</section>
+
+<section id="gallery" class="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-28">
+  <div class="flex flex-wrap items-end justify-between gap-5">
+    <div>
+      <p class="text-xs uppercase tracking-[.25em] text-[#a94f37]">The collection</p>
+      <h2 class="serif mt-3 text-4xl md:text-5xl">Art worth exploring.</h2>
+      <p class="mt-4 max-w-lg text-sm leading-7 text-stone-500">From quiet landscapes to bold contemporary expressions, discover a collection shaped by imagination.</p>
+    </div>
+    <p id="artCount" class="text-sm text-stone-500">8 artworks</p>
+  </div>
+
+  <div class="mt-9 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div id="filters" class="flex flex-wrap gap-2">
+      <button class="filter-btn active" data-filter="All">All Artworks</button>
+      <button class="filter-btn" data-filter="Classical">Classical</button>
+      <button class="filter-btn" data-filter="Impressionism">Impressionism</button>
+      <button class="filter-btn" data-filter="Modern">Modern Art</button>
+      <button class="filter-btn" data-filter="Abstract">Abstract</button>
+    </div>
+    <div class="flex gap-2">
+      <input id="searchInput" type="search" placeholder="Search artworks..." class="w-full border border-stone-300 bg-transparent px-4 py-3 text-sm outline-none focus:border-[#a94f37] sm:w-64">
+      <button id="clearSearch" class="border border-stone-300 px-3 text-sm hover:bg-stone-200" aria-label="Clear search">↺</button>
+    </div>
+  </div>
+
+  <div id="artGrid" class="mt-10 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4"></div>
+  <div id="emptyState" class="hidden py-20 text-center">
+    <p class="serif text-2xl">No artworks found.</p>
+    <p class="mt-3 text-sm text-stone-500">Try another title, artist, or category.</p>
+  </div>
+  <div class="mt-14 text-center">
+    <button id="showAllBtn" class="border border-stone-400 px-8 py-3 text-sm transition hover:bg-[#26251f] hover:text-white">Show all artworks ↓</button>
+  </div>
+</section>
+
+<section id="artists" class="bg-[#e9e3d8]">
+  <div class="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-24">
+    <div class="grid items-center gap-12 md:grid-cols-2">
+      <div class="grid grid-cols-2 gap-4">
+        <img class="mt-10 h-64 w-full object-cover" src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=700&q=80" alt="Colorful modern artwork">
+        <img class="h-64 w-full object-cover" src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=700&q=80" alt="Abstract art on canvas">
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[.25em] text-[#a94f37]">Meet the creators</p>
+        <h2 class="serif mt-4 text-4xl leading-tight md:text-5xl">Behind every masterpiece is a mind that sees differently.</h2>
+        <p class="mt-6 text-sm leading-8 text-stone-600">Artists transform ordinary moments into extraordinary experiences. Explore the techniques, ideas, and stories that make each artistic voice unique.</p>
+        <div class="mt-8 space-y-5">
+          <div class="flex items-center gap-4 border-b border-stone-300 pb-4">
+            <span class="serif text-2xl text-[#a94f37]">01</span><div><p class="font-semibold">The Classic Masters</p><p class="mt-1 text-xs text-stone-500">Tradition, technique, and timeless beauty</p></div>
+          </div>
+          <div class="flex items-center gap-4 border-b border-stone-300 pb-4">
+            <span class="serif text-2xl text-[#a94f37]">02</span><div><p class="font-semibold">The Impressionists</p><p class="mt-1 text-xs text-stone-500">Light, movement, and fleeting moments</p></div>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="serif text-2xl text-[#a94f37]">03</span><div><p class="font-semibold">The Modern Visionaries</p><p class="mt-1 text-xs text-stone-500">New ideas and expressive forms</p></div>
+          </div>
+        </div>
+        <a href="#gallery" class="mt-8 inline-block border-b border-[#a94f37] pb-1 text-sm">Explore their work ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-28">
+  <div class="mx-auto max-w-3xl text-center">
+    <p class="text-xs uppercase tracking-[.25em] text-[#a94f37]">Our philosophy</p>
+    <h2 class="serif mt-5 text-4xl leading-tight md:text-6xl">Art belongs to everyone.</h2>
+    <p class="mt-7 text-sm leading-8 text-stone-600 md:text-base">Artistry is a digital space created to make art more approachable. We bring together styles, stories, and artistic ideas in one welcoming place, helping everyone discover something that speaks to them.</p>
+    <div class="mt-9 flex flex-wrap justify-center gap-3">
+      <span class="border border-stone-300 px-4 py-2 text-xs">Culture</span>
+      <span class="border border-stone-300 px-4 py-2 text-xs">Creativity</span>
+      <span class="border border-stone-300 px-4 py-2 text-xs">Discovery</span>
+      <span class="border border-stone-300 px-4 py-2 text-xs">Inspiration</span>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#a94f37] text-white">
+  <div class="mx-auto grid max-w-7xl items-center gap-8 px-5 py-14 md:grid-cols-2 lg:px-10">
+    <div>
+      <p class="text-xs uppercase tracking-[.25em] text-white/70">The Artistry letter</p>
+      <h2 class="serif mt-3 text-3xl md:text-4xl">A little art in your inbox.</h2>
+      <p class="mt-3 text-sm leading-7 text-white/80">Receive curated artworks, artist stories, and creative inspiration.</p>
+    </div>
+    <form id="newsletterForm" class="flex flex-col gap-3 sm:flex-row">
+      <input id="emailInput" type="email" required placeholder="Your email address" class="min-w-0 flex-1 border border-white/50 bg-white/10 px-4 py-4 text-sm text-white outline-none placeholder:text-white/70">
+      <button class="bg-[#f6f3ed] px-6 py-4 text-sm font-semibold text-[#26251f] hover:bg-white">Subscribe ↗</button>
+    </form>
+    <p id="newsletterMessage" class="text-sm sm:col-span-2" aria-live="polite"></p>
+  </div>
+</section>
+</main>
+
+<footer class="bg-[#26251f] text-white">
+  <div class="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
+    <div>
+      <a href="#home" class="serif text-2xl">ARTISTRY<span class="text-[#d18a72]">.</span></a>
+      <p class="mt-4 max-w-xs text-sm leading-7 text-stone-400">A digital museum for curious minds and creative souls.</p>
+    </div>
+    <div><p class="text-xs uppercase tracking-[.2em] text-stone-400">Explore</p><div class="mt-4 flex flex-col gap-3 text-sm"><a class="hover:text-[#d18a72]" href="#gallery">The Collection</a><a class="hover:text-[#d18a72]" href="#artists">Artists</a><a class="hover:text-[#d18a72]" href="#about">Our Museum</a></div></div>
+    <div><p class="text-xs uppercase tracking-[.2em] text-stone-400">Discover</p><div class="mt-4 flex flex-col gap-3 text-sm"><a href="#gallery" class="hover:text-[#d18a72]">Classical Art</a><a href="#gallery" class="hover:text-[#d18a72]">Modern Art</a><a href="#gallery" class="hover:text-[#d18a72]">Abstract Art</a></div></div>
+    <div><p class="text-xs uppercase tracking-[.2em] text-stone-400">Stay inspired</p><p class="mt-4 text-sm leading-7 text-stone-400">Keep discovering new perspectives, one artwork at a time.</p><a href="#home" class="mt-4 inline-block text-sm text-[#d18a72]">Back to top ↑</a></div>
+  </div>
+  <div class="border-t border-white/10 px-5 py-5 text-center text-xs text-stone-500">© <span id="year"></span> Artistry Digital Museum. Created for art lovers.</div>
+</footer>
+
+<div id="artModal" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="relative my-auto grid w-full max-w-3xl overflow-hidden bg-[#f6f3ed] md:grid-cols-2">
+    <button id="closeModal" class="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-white text-2xl" aria-label="Close artwork details">×</button>
+    <img id="modalImage" class="h-72 w-full object-cover md:h-full" src="" alt="">
+    <div class="p-7 md:p-10">
+      <p id="modalCategory" class="text-xs uppercase tracking-[.2em] text-[#a94f37]"></p>
+      <h2 id="modalTitle" class="serif mt-4 text-3xl leading-tight"></h2>
+      <p id="modalArtist" class="mt-3 text-sm text-stone-500"></p>
+      <div class="my-6 h-px bg-stone-300"></div>
+      <p id="modalDescription" class="text-sm leading-8 text-stone-600"></p>
+      <button id="modalFavorite" class="mt-8 border border-stone-400 px-5 py-3 text-sm hover:bg-stone-200">♡ Add to favorites</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const artworks = [
+ {id:1,title:"Whispers of the Garden",artist:"Elena Laurent",year:"1892",category:"Classical",image:"https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=85",description:"An exploration of quiet beauty and the relationship between people and nature. Soft details and thoughtful composition invite the viewer to pause."},
+ {id:2,title:"A Study in Blue",artist:"Margot Ellis",year:"1905",category:"Impressionism",image:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=900&q=85",description:"Inspired by the changing qualities of light, this work explores color, atmosphere, and the fleeting nature of a single moment."},
+ {id:3,title:"Fragments of Time",artist:"Noah Bennett",year:"2021",category:"Abstract",image:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=900&q=85",description:"Bold shapes and layered colors come together in a contemporary study of memory, movement, and the passage of time."},
+ {id:4,title:"Golden Hour",artist:"Sofia Moreau",year:"1898",category:"Impressionism",image:"https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=900&q=85",description:"A celebration of warm light and delicate color. This piece captures the beauty of ordinary scenes transformed by the setting sun."},
+ {id:5,title:"The Silent Room",artist:"Arthur Wells",year:"1886",category:"Classical",image:"https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=900&q=85",description:"A reflective composition that uses light, shadow, and carefully arranged forms to create a sense of stillness and intimacy."},
+ {id:6,title:"Chromatic Dreams",artist:"Amara Lewis",year:"2023",category:"Modern",image:"https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=900&q=85",description:"An energetic visual experiment that brings unexpected colors and expressive forms together in a celebration of imagination."},
+ {id:7,title:"Beyond the Horizon",artist:"Julian Reed",year:"1912",category:"Modern",image:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=900&q=85",description:"A modern perspective on distance and possibility, using simplified forms to suggest a landscape beyond what the eye can see."},
+ {id:8,title:"Lines of Emotion",artist:"Mira Kapoor",year:"2022",category:"Abstract",image:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=900&q=85",description:"Flowing shapes and contrasting tones express emotions without words, allowing every visitor to find their own interpretation."}
+];
+
+let activeFilter = "All";
+let query = "";
+let showAll = false;
+let selectedArtwork = null;
+const favorites = new Set(JSON.parse(localStorage.getItem("artistryFavorites") || "[]"));
+const artGrid = document.getElementById("artGrid");
+const modal = document.getElementById("artModal");
+
+function renderArtworks(){
+  const filtered = artworks.filter(art => {
+    const matchesCategory = activeFilter === "All" || art.category === activeFilter;
+    const searchable = (art.title + " " + art.artist + " " + art.category + " " + art.year).toLowerCase();
+    return matchesCategory && searchable.includes(query.toLowerCase());
+  });
+  const visible = showAll ? filtered : filtered.slice(0,4);
+  document.getElementById("artCount").textContent = `${filtered.length} artwork${filtered.length===1?"":"s"}`;
+  document.getElementById("emptyState").classList.toggle("hidden", filtered.length !== 0);
+  document.getElementById("showAllBtn").classList.toggle("hidden", filtered.length <= 4);
+  document.getElementById("showAllBtn").textContent = showAll ? "Show fewer ↑" : "Show all artworks ↓";
+  artGrid.innerHTML = visible.map(art => `
+    <article class="art-card group cursor-pointer">
+      <div class="relative overflow-hidden bg-[#e7e0d5]">
+        <button class="art-open block w-full overflow-hidden" data-id="${art.id}" aria-label="View ${art.title}">
+          <img class="art-image h-[330px] w-full object-cover" src="${art.image}" alt="${art.title}" loading="lazy">
+        </button>
+        <button class="heart-btn ${favorites.has(art.id)?"saved":""} absolute right-3 top-3" data-favorite="${art.id}" aria-label="Toggle favorite" aria-pressed="${favorites.has(art.id)}">${favorites.has(art.id)?"♥":"♡"}</button>
+        <span class="absolute bottom-3 left-3 bg-[#f6f3ed] px-3 py-1.5 text-[10px] uppercase tracking-wider">${art.category}</span>
+      </div>
+      <button class="art-open mt-4 text-left" data-id="${art.id}">
+        <h3 class="serif text-xl transition group-hover:text-[#a94f37]">${art.title}</h3>
+        <p class="mt-2 text-xs text-stone-500">${art.artist} <span class="px-1">·</span> ${art.year}</p>
+      </button>
+      <button class="art-open mt-4 border-b border-stone-300 pb-1 text-xs hover:border-[#a94f37]" data-id="${art.id}">Discover artwork ↗</button>
+    </article>`).join("");
+}
+
+function saveFavorites(){
+  localStorage.setItem("artistryFavorites", JSON.stringify([...favorites]));
+}
+
+function toggleFavorite(id){
+  if(favorites.has(id)) favorites.delete(id);
+  else favorites.add(id);
+  saveFavorites();
+  renderArtworks();
+  if(selectedArtwork && selectedArtwork.id === id) updateModalFavorite();
+}
+
+function updateModalFavorite(){
+  const saved = favorites.has(selectedArtwork.id);
+  document.getElementById("modalFavorite").textContent = saved ? "♥ Remove from favorites" : "♡ Add to favorites";
+  document.getElementById("modalFavorite").classList.toggle("text-[#a94f37]", saved);
+}
+
+function openArtwork(id){
+  selectedArtwork = artworks.find(art => art.id === id);
+  if(!selectedArtwork) return;
+  document.getElementById("modalImage").src = selectedArtwork.image;
+  document.getElementById("modalImage").alt = selectedArtwork.title;
+  document.getElementById("modalCategory").textContent = selectedArtwork.category + " · " + selectedArtwork.year;
+  document.getElementById("modalTitle").textContent = selectedArtwork.title;
+  document.getElementById("modalArtist").textContent = "Created by " + selectedArtwork.artist;
+  document.getElementById("modalDescription").textContent = selectedArtwork.description;
+  updateModalFavorite();
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  document.body.style.overflow = "hidden";
+  document.getElementById("closeModal").focus();
+}
+
+function closeArtwork(){
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  document.body.style.overflow = "";
+  selectedArtwork = null;
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const button = e.target.closest("[data-filter]");
+  if(!button) return;
+  activeFilter = button.dataset.filter;
+  showAll = false;
+  document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.toggle("active", btn === button));
+  renderArtworks();
+});
+
+document.getElementById("searchInput").addEventListener("input", e => {
+  query = e.target.value.trim();
+  showAll = false;
+  renderArtworks();
+});
+
+document.getElementById("clearSearch").addEventListener("click", () => {
+  document.getElementById("searchInput").value = "";
+  query = "";
+  showAll = false;
+  renderArtworks();
+});
+
+document.getElementById("showAllBtn").addEventListener("click", () => {
+  showAll = !showAll;
+  renderArtworks();
+});
+
+artGrid.addEventListener("click", e => {
+  const favoriteButton = e.target.closest("[data-favorite]");
+  if(favoriteButton){
+    toggleFavorite(Number(favoriteButton.dataset.favorite));
+    return;
+  }
+  const openButton = e.target.closest(".art-open");
+  if(openButton) openArtwork(Number(openButton.dataset.id));
+});
+
+document.getElementById("closeModal").addEventListener("click", closeArtwork);
+modal.addEventListener("click", e => { if(e.target === modal) closeArtwork(); });
+document.getElementById("modalFavorite").addEventListener("click", () => {
+  if(selectedArtwork) toggleFavorite(selectedArtwork.id);
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && !modal.classList.contains("hidden")) closeArtwork();
+});
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+  const menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("hidden");
+});
+document.querySelectorAll("#mobileMenu a").forEach(link => {
+  link.addEventListener("click", () => document.getElementById("mobileMenu").classList.add("hidden"));
+});
+
+document.getElementById("newsletterForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const email = document.getElementById("emailInput").value.trim();
+  if(!email) return;
+  document.getElementById("newsletterMessage").textContent = "Thank you for your interest! This demo does not send or store subscriptions.";
+  e.target.reset();
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+renderArtworks();
+</script>
+</body>
+</html>
